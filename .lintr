@@ -1,0 +1,31 @@
+linters: linters_with_defaults() # see vignette("lintr")
+encoding: "UTF-8"
+exclusions: list(
+    "tests/testthat/helper-beaver_mcmc.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-data.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-get_jags_data.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-get_jags_model.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-mean.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-model.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-posterior.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/helper-pr_eoi.R" = list(
+      object_usage_linter = Inf
+    ),
+    "tests/testthat/fixtures/make-nb_bma_objects.R" = list(
+      object_usage_linter = Inf
+    )
+  )

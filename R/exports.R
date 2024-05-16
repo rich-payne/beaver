@@ -1,0 +1,2 @@
+#' @export
+yodel::posterior

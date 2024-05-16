@@ -1,0 +1,11 @@
+^beaver\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^scratch$
+^tests/testthat/fixtures/make-[[:graph:]]*\.R$
+^ept$
+^\.github$
+^\.lintr$
+^\.covrignore$
+^LICENSE\.md$
+^cran-comments\.md$

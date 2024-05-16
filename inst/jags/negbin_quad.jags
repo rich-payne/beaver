@@ -1,0 +1,20 @@
+model {
+  for (i in 1:n_obs) {
+    y[i] ~ dnegbin(p[dose_index[i]], r[i])
+    intercept[i] <- x[i, ] %*% b1
+    r[i] <- mu[i] * p[dose_index[i]] / (1 - p[dose_index[i]])
+    log(mu[i]) <- intercept[i] + b2 * dose[dose_index[i]] + b3 * dose[dose_index[i]] ^ 2
+  }
+  for (i in 1:n_doses) {
+    p[i] ~ dunif(0, 1)
+  }
+  for (i in 1:k) {
+    b1[i] ~ dnorm(mu_b1, tau2_b1)
+  }
+  b2 ~ dnorm(mu_b2, tau2_b2)
+  b3 ~ dnorm(mu_b3, tau2_b3)
+  tau2_b1 <- 1 / sigma_b1 ^ 2
+  tau2_b2 <- 1 / sigma_b2 ^ 2
+  tau2_b3 <- 1 / sigma_b3 ^ 2
+  # sigma <- sqrt(sigma2)
+}
