@@ -1,6 +1,6 @@
 Package: beaver
-Title: Bayesian Model Averaging of Covariate Adjusted Neg-Binom Dose-Response
-Version: 0.2.0-1
+Title: Bayesian Model Averaging of Covariate Adjusted Negative-Binomial Dose-Response
+Version: 1.0.0
 Authors@R: c(
     person(given = "Richard",
            family = "Payne",
