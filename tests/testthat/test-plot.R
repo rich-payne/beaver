@@ -312,6 +312,8 @@ test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc_bma,
 
 test_that("plot works against an S3 object of class beaver_mcmc_bma", {
 
+  skip_on_cran()
+
   nb_monotone_incr <- readRDS(test_path("fixtures", "nb_monotone_incr.rds"))
 
   expect_failure(expect_s3_class(nb_monotone_incr, NA))
@@ -406,6 +408,8 @@ test_that("plot works against an S3 object of class beaver_mcmc_bma", {
 })
 
 test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr <- readRDS(test_path("fixtures", "nb_monotone_incr.rds"))
 
@@ -510,6 +514,8 @@ test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, pro
 
 test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, with covariates, produces an object with correct properties", { # nolint
 
+  skip_on_cran()
+
   nb_monotone_incr_cov <- readRDS(test_path("fixtures", "nb_monotone_incr_cov.rds")) # nolint
 
   expect_failure(expect_s3_class(nb_monotone_incr_cov, NA))
@@ -612,6 +618,8 @@ test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, wit
 })
 
 test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, with covariates & type == \"g-comp\", produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_cov <- readRDS(test_path("fixtures", "nb_monotone_incr_cov.rds")) # nolint
 
@@ -724,6 +732,8 @@ test_that("plot.beaver_mcmc works against an S3 object of class beaver_mcmc, wit
 })
 
 test_that("plot works against an S3 object of class beaver_mcmc", {
+
+  skip_on_cran()
 
   nb_monotone_incr <- readRDS(test_path("fixtures", "nb_monotone_incr.rds"))
 

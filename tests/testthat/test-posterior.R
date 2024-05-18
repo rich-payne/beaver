@@ -216,6 +216,8 @@ test_that("posterior works against an S3 object of class beaver_mcmc_bma, produc
 
 test_that("posterior.beaver_mcmc works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
 
+  skip_on_cran()
+
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
   expect_failure(expect_s3_class(nb_monotone_incr_new, NA))
@@ -424,6 +426,8 @@ test_that("posterior.beaver_mcmc works against an S3 object of class beaver_mcmc
 })
 
 test_that("posterior.beaver_mcmc works against an S3 object of class beaver_mcmc, with covariates, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_cov_new <- readRDS(test_path("fixtures", "nb_monotone_incr_cov_new.rds")) # nolint
 
@@ -634,6 +638,8 @@ test_that("posterior.beaver_mcmc works against an S3 object of class beaver_mcmc
 
 test_that("posterior works identically to posterior.beaver_mcmc", {
 
+  skip_on_cran()
+
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
   expect_failure(expect_s3_class(nb_monotone_incr_new, NA))
@@ -802,6 +808,8 @@ test_that("posterior works identically to posterior.beaver_mcmc", {
 })
 
 test_that("posterior_bma works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
@@ -1333,6 +1341,8 @@ test_that("adjust_reference works against an S3 object of class beaver_mcmc, pro
 })
 
 test_that("adjust_reference_impl works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
@@ -2291,6 +2301,8 @@ test_that("posterior_g_comp works against an S3 object of class class beaver_mcm
 })
 
 test_that("posterior_g_comp works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_cov <- readRDS(test_path("fixtures", "nb_monotone_incr_cov.rds")) # nolint
 

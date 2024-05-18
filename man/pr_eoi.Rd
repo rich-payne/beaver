@@ -46,6 +46,7 @@ Calculate a posterior quantity such as
 Pr(trt_arm1 - trt_arm2 > eoi)
 }
 \examples{
+\dontrun{
 library(dplyr)
 
 # No covariates----
@@ -271,6 +272,7 @@ pr_eoi_g_comp(
 )
 
 plot(mcmc_cov, new_data = df_cov, type = "g-comp")
+}
 }
 \seealso{
 Other posterior calculations: 

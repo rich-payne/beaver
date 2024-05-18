@@ -47,6 +47,7 @@ weights, sampled model index, and individual MCMC fits.
 Bayesian Model Averaging of Covariate Adjusted Neg-Binomial Dose-Response
 }
 \examples{
+\dontrun{
 library(dplyr)
 
 # No covariates----
@@ -272,6 +273,7 @@ pr_eoi_g_comp(
 )
 
 plot(mcmc_cov, new_data = df_cov, type = "g-comp")
+}
 }
 \seealso{
 Other models: 

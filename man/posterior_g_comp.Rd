@@ -70,6 +70,7 @@ at each dose and average over all observations.  This function calculates
 the posterior marginal treatment effect at each dose.
 }
 \examples{
+\dontrun{
 library(dplyr)
 
 # No covariates----
@@ -295,6 +296,7 @@ pr_eoi_g_comp(
 )
 
 plot(mcmc_cov, new_data = df_cov, type = "g-comp")
+}
 }
 \seealso{
 Other posterior calculations: 

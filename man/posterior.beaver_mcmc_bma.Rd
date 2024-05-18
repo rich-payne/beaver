@@ -64,6 +64,7 @@ Calculate posterior quantities of interest using Bayesian model
 averaging.
 }
 \examples{
+\dontrun{
 library(dplyr)
 
 # No covariates----
@@ -289,6 +290,7 @@ pr_eoi_g_comp(
 )
 
 plot(mcmc_cov, new_data = df_cov, type = "g-comp")
+}
 }
 \seealso{
 Other posterior calculations: 

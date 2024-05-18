@@ -1,6 +1,8 @@
 
 test_that("pr_eoi works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
 
+  skip_on_cran()
+
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
   expect_failure(expect_s3_class(nb_monotone_incr_new, NA))
@@ -50,36 +52,6 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc, produces an o
     contrast = contrast1,
     posteriors = samps1,
     eoi = eoi
-  )
-
-  #>>direction == "less"----
-
-  pr_eoi1_less <- pr_eoi(
-    x = nb_indep_model_samples_updatedattr,
-    eoi = eoi,
-    new_data = nb_monotone_incr_new,
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi1 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi1_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi1 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
   )
 
   #>reference_dose == [first dose], reference_type == "difference"----
@@ -146,6 +118,36 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc, produces an o
     eoi = eoib
   )
 
+  #>reference_dose == NULL, direction == "less"----
+
+  pr_eoi1_less <- pr_eoi(
+    x = nb_indep_model_samples_updatedattr,
+    eoi = eoi,
+    new_data = nb_monotone_incr_new,
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi1 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi1_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi1 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
   #contrast----
 
   contrast2 <- get_contrast(
@@ -175,36 +177,6 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc, produces an o
     contrast = contrast2,
     posteriors = samps2,
     eoi = eoi
-  )
-
-  #>>direction == "less"----
-
-  pr_eoi2_less <- pr_eoi(
-    x = nb_indep_model_samples_updatedattr,
-    eoi = eoi,
-    contrast = matrix(1, 1, 1),
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi2_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi2 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi2_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi2 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi2_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
   )
 
   #>reference_dose == [first dose], reference_type == "difference"----
@@ -259,6 +231,36 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc, produces an o
     contrast = contrast2,
     posteriors = samps2b,
     eoi = eoib
+  )
+
+  #>reference_dose == NULL, direction == "less"----
+
+  pr_eoi2_less <- pr_eoi(
+    x = nb_indep_model_samples_updatedattr,
+    eoi = eoi,
+    contrast = matrix(1, 1, 1),
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi2_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi2 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi2_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi2 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi2_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
   )
 })
 
@@ -317,36 +319,6 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc_bma, produces 
     contrast = contrast1,
     posteriors = samps1,
     eoi = eoi
-  )
-
-  #>>direction == "less"----
-
-  pr_eoi1_less <- pr_eoi(
-    x = nb_bma,
-    eoi = eoi,
-    new_data = nb_monotone_incr_new,
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi1 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi1_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi1 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
   )
 
   #>reference_dose == [first dose], reference_type == "difference"----
@@ -434,36 +406,6 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc_bma, produces 
     eoi = eoi
   )
 
-  #>>direction == "less"----
-
-  pr_eoi2_less <- pr_eoi(
-    x = nb_bma,
-    eoi = eoi,
-    contrast = matrix(1, 1, 1),
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi2_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi2 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi2_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi2 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi2_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
-  )
-
   #>reference_dose == [first dose], reference_type == "difference"----
 
   samps2a <- yodel::posterior(
@@ -517,9 +459,77 @@ test_that("pr_eoi works against an S3 object of class beaver_mcmc_bma, produces 
     posteriors = samps2b,
     eoi = eoib
   )
+
+  #new_data----
+
+  skip_on_cran()
+
+  #>reference_dose == NULL, direction == "less"----
+
+  pr_eoi1_less <- pr_eoi(
+    x = nb_bma,
+    eoi = eoi,
+    new_data = nb_monotone_incr_new,
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi1 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi1_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi1 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
+  #contrast----
+
+  #>reference_dose == NULL, direction == "less"----
+
+  pr_eoi2_less <- pr_eoi(
+    x = nb_bma,
+    eoi = eoi,
+    contrast = matrix(1, 1, 1),
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi2_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi2 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi2_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi2 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi2_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
 })
 
 test_that("pr_eoi_impl works against an S3 object of class beaver_mcmc, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
@@ -741,6 +751,8 @@ test_that("pr_eoi_impl works against an S3 object of class beaver_mcmc, produces
 })
 
 test_that("pr_eoi_impl works against an S3 object of class beaver_mcmc_bma, produces an object with correct properties", { # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_new <- readRDS(test_path("fixtures", "nb_monotone_incr_new.rds")) # nolint
 
@@ -1034,41 +1046,6 @@ test_that("apply_direction works against an S3 object of class data.frame, produ
     "greater"
   )
 
-  #>>direction == "less"----
-
-  expect_no_error(
-    apply_direction(
-      x = pr_eoi_impl1,
-      direction = "less"
-    )
-  )
-
-  direction1_less <- apply_direction(
-    x = pr_eoi_impl1,
-    direction = "less"
-  )
-
-  expect_identical(
-    direction1_less %>%
-      dplyr::select(- c(prob, direction)),
-    direction1 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    direction1_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    direction1 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    direction1_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
-  )
-
   #>reference_dose == [first dose], reference_type == "difference"----
 
   samps1a <- yodel::posterior(
@@ -1198,41 +1175,6 @@ test_that("apply_direction works against an S3 object of class data.frame, produ
     "greater"
   )
 
-  #>>direction == "less"----
-
-  expect_no_error(
-    apply_direction(
-      x = pr_eoi_impl2,
-      direction = "less"
-    )
-  )
-
-  direction2_less <- apply_direction(
-    x = pr_eoi_impl2,
-    direction = "less"
-  )
-
-  expect_identical(
-    direction2_less %>%
-      dplyr::select(- c(prob, direction)),
-    direction2 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    direction2_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    direction2 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    direction2_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
-  )
-
   #>reference_dose == [first dose], reference_type == "difference"----
 
   samps2a <- yodel::posterior(
@@ -1314,9 +1256,89 @@ test_that("apply_direction works against an S3 object of class data.frame, produ
       dplyr::pull(direction),
     "greater"
   )
+
+  #new_data----
+
+  skip_on_cran()
+
+  #>reference_dose == NULL, direction == "less"----
+
+  expect_no_error(
+    apply_direction(
+      x = pr_eoi_impl1,
+      direction = "less"
+    )
+  )
+
+  direction1_less <- apply_direction(
+    x = pr_eoi_impl1,
+    direction = "less"
+  )
+
+  expect_identical(
+    direction1_less %>%
+      dplyr::select(- c(prob, direction)),
+    direction1 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    direction1_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    direction1 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    direction1_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
+  #contrast----
+
+  #>reference_dose == NULL, direction == "less"----
+
+  expect_no_error(
+    apply_direction(
+      x = pr_eoi_impl2,
+      direction = "less"
+    )
+  )
+
+  direction2_less <- apply_direction(
+    x = pr_eoi_impl2,
+    direction = "less"
+  )
+
+  expect_identical(
+    direction2_less %>%
+      dplyr::select(- c(prob, direction)),
+    direction2 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    direction2_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    direction2 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    direction2_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
+
 })
 
 test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc, produces an object with correct properties", {  # nolint
+
+  skip_on_cran()
 
   nb_monotone_incr_cov <- readRDS(test_path("fixtures", "nb_monotone_incr_cov.rds"))  # nolint
 
@@ -1360,36 +1382,6 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc, produc
     samples = nb_emax_model_cov_samples_updatedattr,
     posteriors = samps1,
     eoi = eoi
-  )
-
-  #>>direction == "less"----
-
-  pr_eoi_g_comp1_less <- pr_eoi_g_comp(
-    x = nb_emax_model_cov_samples_updatedattr,
-    eoi = eoi,
-    new_data = nb_monotone_incr_cov,
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi_g_comp1_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi_g_comp1 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi_g_comp1_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi_g_comp1 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi_g_comp1_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
   )
 
   #>reference_dose == [first dose], reference_type == "difference"----
@@ -1454,6 +1446,36 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc, produc
     eoi = eoib
   )
 
+  #>reference_dose == NULL, direction == "less"----
+
+  pr_eoi_g_comp1_less <- pr_eoi_g_comp(
+    x = nb_emax_model_cov_samples_updatedattr,
+    eoi = eoi,
+    new_data = nb_monotone_incr_cov,
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi_g_comp1_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi_g_comp1 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi_g_comp1_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi_g_comp1 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi_g_comp1_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
   # nolint start
   # #contrast----
   #
@@ -1477,36 +1499,6 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc, produc
   #   samples = nb_emax_model_cov_samples_updatedattr,
   #   posteriors = samps2,
   #   eoi = eoi
-  # )
-  #
-  # #>>direction == "less"----
-  #
-  # pr_eoi_g_comp2_less <- pr_eoi_g_comp(
-  #   x = nb_emax_model_cov_samples_updatedattr,
-  #   eoi = eoi,
-  #   contrast = matrix(1, 1, 1),
-  #   direction = "less"
-  # )
-  #
-  # expect_identical(
-  #   pr_eoi_g_comp2_less %>%
-  #     dplyr::select(-c(prob, direction)),
-  #   pr_eoi_g_comp2 %>%
-  #     dplyr::select(-c(prob, direction)),
-  # )
-  # expect_equal(
-  #   pr_eoi_g_comp2_less %>%
-  #     dplyr::mutate(prob1 = 1 - prob) %>%
-  #     dplyr::pull(prob1),
-  #   pr_eoi_g_comp2 %>%
-  #     dplyr::pull(prob)
-  # )
-  # expect_identical(
-  #   pr_eoi_g_comp2_less %>%
-  #     dplyr::ungroup() %>%
-  #     dplyr::distinct(direction) %>%
-  #     dplyr::pull(direction),
-  #   "less"
   # )
   #
   # #>reference_dose == [first dose], reference_type == "difference"----
@@ -1560,6 +1552,37 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc, produc
   #   posteriors = samps2b,
   #   eoi = eoib
   # )
+  #
+  # #>reference_dose == NULL, direction == "less"----
+  #
+  # pr_eoi_g_comp2_less <- pr_eoi_g_comp(
+  #   x = nb_emax_model_cov_samples_updatedattr,
+  #   eoi = eoi,
+  #   contrast = matrix(1, 1, 1),
+  #   direction = "less"
+  # )
+  #
+  # expect_identical(
+  #   pr_eoi_g_comp2_less %>%
+  #     dplyr::select(-c(prob, direction)),
+  #   pr_eoi_g_comp2 %>%
+  #     dplyr::select(-c(prob, direction)),
+  # )
+  # expect_equal(
+  #   pr_eoi_g_comp2_less %>%
+  #     dplyr::mutate(prob1 = 1 - prob) %>%
+  #     dplyr::pull(prob1),
+  #   pr_eoi_g_comp2 %>%
+  #     dplyr::pull(prob)
+  # )
+  # expect_identical(
+  #   pr_eoi_g_comp2_less %>%
+  #     dplyr::ungroup() %>%
+  #     dplyr::distinct(direction) %>%
+  #     dplyr::pull(direction),
+  #   "less"
+  # )
+  #
   # nolint end
 })
 
@@ -1611,36 +1634,6 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc_bma, pr
     samples = nb_bma_cov,
     posteriors = samps1,
     eoi = eoi
-  )
-
-  #>>direction == "less"----
-
-  pr_eoi1_less <- pr_eoi_g_comp(
-    x = nb_bma_cov,
-    eoi = eoi,
-    new_data = nb_monotone_incr_cov,
-    direction = "less"
-  )
-
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::select(- c(prob, direction)),
-    pr_eoi1 %>%
-      dplyr::select(- c(prob, direction)),
-  )
-  expect_equal(
-    pr_eoi1_less %>%
-      dplyr::mutate(prob1 = 1 - prob) %>%
-      dplyr::pull(prob1),
-    pr_eoi1 %>%
-      dplyr::pull(prob)
-  )
-  expect_identical(
-    pr_eoi1_less %>%
-      dplyr::ungroup() %>%
-      dplyr::distinct(direction) %>%
-      dplyr::pull(direction),
-    "less"
   )
 
   #>reference_dose == [first dose], reference_type == "difference"----
@@ -1695,6 +1688,38 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc_bma, pr
     eoi = eoib
   )
 
+  #>reference_dose == NULL, direction == "less"----
+
+  skip_on_cran()
+
+  pr_eoi1_less <- pr_eoi_g_comp(
+    x = nb_bma_cov,
+    eoi = eoi,
+    new_data = nb_monotone_incr_cov,
+    direction = "less"
+  )
+
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::select(- c(prob, direction)),
+    pr_eoi1 %>%
+      dplyr::select(- c(prob, direction)),
+  )
+  expect_equal(
+    pr_eoi1_less %>%
+      dplyr::mutate(prob1 = 1 - prob) %>%
+      dplyr::pull(prob1),
+    pr_eoi1 %>%
+      dplyr::pull(prob)
+  )
+  expect_identical(
+    pr_eoi1_less %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(direction) %>%
+      dplyr::pull(direction),
+    "less"
+  )
+
   # nolint start
   # #contrast----
   #
@@ -1718,36 +1743,6 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc_bma, pr
   #   samples = nb_bma_cov,
   #   posteriors = samps2,
   #   eoi = eoi
-  # )
-  #
-  # #>>direction == "less"----
-  #
-  # pr_eoi2_less <- pr_eoi_g_comp(
-  #   x = nb_bma_cov,
-  #   eoi = eoi,
-  #   contrast = matrix(1, 1, 1),
-  #   direction = "less"
-  # )
-  #
-  # expect_identical(
-  #   pr_eoi2_less %>%
-  #     dplyr::select(-c(prob, direction)),
-  #   pr_eoi2 %>%
-  #     dplyr::select(-c(prob, direction)),
-  # )
-  # expect_equal(
-  #   pr_eoi2_less %>%
-  #     dplyr::mutate(prob1 = 1 - prob) %>%
-  #     dplyr::pull(prob1),
-  #   pr_eoi2 %>%
-  #     dplyr::pull(prob)
-  # )
-  # expect_identical(
-  #   pr_eoi2_less %>%
-  #     dplyr::ungroup() %>%
-  #     dplyr::distinct(direction) %>%
-  #     dplyr::pull(direction),
-  #   "less"
   # )
   #
   # #>reference_dose == [first dose], reference_type == "difference"----
@@ -1800,6 +1795,36 @@ test_that("pr_eoi_g_comp works against an S3 object of class beaver_mcmc_bma, pr
   #   samples = nb_bma_cov,
   #   posteriors = samps2b,
   #   eoi = eoib
+  # )
+  #
+  # #>reference_dose == NULL, direction == "less"----
+  #
+  # pr_eoi2_less <- pr_eoi_g_comp(
+  #   x = nb_bma_cov,
+  #   eoi = eoi,
+  #   contrast = matrix(1, 1, 1),
+  #   direction = "less"
+  # )
+  #
+  # expect_identical(
+  #   pr_eoi2_less %>%
+  #     dplyr::select(-c(prob, direction)),
+  #   pr_eoi2 %>%
+  #     dplyr::select(-c(prob, direction)),
+  # )
+  # expect_equal(
+  #   pr_eoi2_less %>%
+  #     dplyr::mutate(prob1 = 1 - prob) %>%
+  #     dplyr::pull(prob1),
+  #   pr_eoi2 %>%
+  #     dplyr::pull(prob)
+  # )
+  # expect_identical(
+  #   pr_eoi2_less %>%
+  #     dplyr::ungroup() %>%
+  #     dplyr::distinct(direction) %>%
+  #     dplyr::pull(direction),
+  #   "less"
   # )
   # nolint end
 })
