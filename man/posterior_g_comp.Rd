@@ -70,7 +70,11 @@ at each dose and average over all observations.  This function calculates
 the posterior marginal treatment effect at each dose.
 }
 \examples{
-\dontrun{
+\donttest{
+# The {beaver} package, by definition, performs MCMC for multiple models.
+# Even with a small number of chains/burn-ins/samples, a minimally illustrative
+# example requires >5s to run.
+
 library(dplyr)
 
 # No covariates----

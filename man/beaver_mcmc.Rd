@@ -47,7 +47,11 @@ weights, sampled model index, and individual MCMC fits.
 Bayesian Model Averaging of Covariate Adjusted Neg-Binomial Dose-Response
 }
 \examples{
-\dontrun{
+\donttest{
+# The {beaver} package, by definition, performs MCMC for multiple models.
+# Even with a small number of chains/burn-ins/samples, a minimally illustrative
+# example requires >5s to run.
+
 library(dplyr)
 
 # No covariates----

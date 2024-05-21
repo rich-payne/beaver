@@ -41,7 +41,11 @@ Extracts posterior draws and puts them into a dataframe or
 tibble.
 }
 \examples{
-\dontrun{
+\donttest{
+# The {beaver} package, by definition, performs MCMC for multiple models.
+# Even with a small number of chains/burn-ins/samples, a minimally illustrative
+# example requires >5s to run.
+
 library(dplyr)
 
 # No covariates----
